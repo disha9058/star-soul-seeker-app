@@ -1,7 +1,8 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Compatibility from "./Compatibility";
+import Chatbot from "./Chatbot";
 
 interface DashboardProps {
   userData: {
@@ -13,16 +14,16 @@ interface DashboardProps {
 
 const mockRecommendations = {
   books: [
-    { title: "The Seven Husbands of Evelyn Hugo", author: "Taylor Jenkins Reid", reason: "Perfect for your romantic energy" },
-    { title: "Circe", author: "Madeline Miller", reason: "Mystical themes align with your cosmic nature" }
+    { title: "The Seven Husbands of Evelyn Hugo", author: "Taylor Jenkins Reid", reason: "Perfect for your romantic energy", link: "https://www.goodreads.com/book/show/32620332" },
+    { title: "Circe", author: "Madeline Miller", reason: "Mystical themes align with your cosmic nature", link: "https://www.goodreads.com/book/show/35959740" }
   ],
   movies: [
-    { title: "Everything Everywhere All at Once", year: "2022", reason: "Mind-bending adventure for your curious spirit" },
-    { title: "The Grand Budapest Hotel", year: "2014", reason: "Artistic and whimsical, perfect for you" }
+    { title: "Everything Everywhere All at Once", year: "2022", reason: "Mind-bending adventure for your curious spirit", link: "https://www.imdb.com/title/tt6710474/" },
+    { title: "The Grand Budapest Hotel", year: "2014", reason: "Artistic and whimsical, perfect for you", link: "https://www.imdb.com/title/tt2278388/" }
   ],
   music: [
-    { title: "Cosmic Love", artist: "Florence + The Machine", reason: "Celestial vibes that resonate with your sign" },
-    { title: "Space Oddity", artist: "David Bowie", reason: "A cosmic classic for your journey" }
+    { title: "Cosmic Love", artist: "Florence + The Machine", reason: "Celestial vibes that resonate with your sign", link: "https://open.spotify.com/track/6oAgGNxgwGUuNbpFhhKlh7" },
+    { title: "Space Oddity", artist: "David Bowie", reason: "A cosmic classic for your journey", link: "https://open.spotify.com/track/5uFJgP9WYNBDwLthIcEsAY" }
   ]
 };
 
@@ -47,6 +48,14 @@ const Dashboard = ({ userData }: DashboardProps) => {
     };
     return emojiMap[sign] || "⭐";
   };
+
+  if (activeTab === "compatibility") {
+    return <Compatibility userData={userData} onBack={() => setActiveTab("walks")} />;
+  }
+
+  if (activeTab === "chatbot") {
+    return <Chatbot userData={userData} onBack={() => setActiveTab("walks")} />;
+  }
 
   if (activeTab === "walks") {
     return (
@@ -105,22 +114,40 @@ const Dashboard = ({ userData }: DashboardProps) => {
             </div>
 
             <div 
+              onClick={() => setActiveTab("compatibility")}
+              className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10 hover:bg-white/8 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="text-lg">💫</div>
+                <span className="text-white font-medium">COMPATIBILITY</span>
+              </div>
+              <div className="text-white/60 text-sm">FIND YOUR COSMIC MATCH</div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </div>
+
+            <div 
+              onClick={() => setActiveTab("chatbot")}
+              className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10 hover:bg-white/8 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="text-lg">🌙</div>
+                <span className="text-white font-medium">LUNA GUIDE</span>
+              </div>
+              <div className="text-white/60 text-sm">DAILY AFFIRMATIONS</div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </div>
+
+            <div 
               onClick={() => setActiveTab("mood")}
               className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10 hover:bg-white/8 transition-colors cursor-pointer"
             >
               <div className="flex items-center space-x-3">
                 <div className="text-lg">✨</div>
                 <span className="text-white font-medium">MORE</span>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                <path d="M9 18l6-6-6-6"/>
-              </svg>
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10 hover:bg-white/8 transition-colors cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="text-lg">ℹ️</div>
-                <span className="text-white font-medium">ABOUT</span>
               </div>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <path d="M9 18l6-6-6-6"/>
@@ -232,7 +259,14 @@ const Dashboard = ({ userData }: DashboardProps) => {
               <CardContent className="p-4">
                 <h4 className="font-medium text-white mb-1">{book.title}</h4>
                 <p className="text-white/60 text-sm mb-2">by {book.author}</p>
-                <p className="text-white/40 text-xs">{book.reason}</p>
+                <p className="text-white/40 text-xs mb-3">{book.reason}</p>
+                <Button 
+                  size="sm" 
+                  className="bg-primary/20 hover:bg-primary/30 text-primary text-xs"
+                  onClick={() => window.open(book.link, '_blank')}
+                >
+                  View Book ↗
+                </Button>
               </CardContent>
             </Card>
           ))}
@@ -246,7 +280,14 @@ const Dashboard = ({ userData }: DashboardProps) => {
               <CardContent className="p-4">
                 <h4 className="font-medium text-white mb-1">{movie.title}</h4>
                 <p className="text-white/60 text-sm mb-2">{movie.year}</p>
-                <p className="text-white/40 text-xs">{movie.reason}</p>
+                <p className="text-white/40 text-xs mb-3">{movie.reason}</p>
+                <Button 
+                  size="sm" 
+                  className="bg-primary/20 hover:bg-primary/30 text-primary text-xs"
+                  onClick={() => window.open(movie.link, '_blank')}
+                >
+                  Watch Trailer ↗
+                </Button>
               </CardContent>
             </Card>
           ))}
@@ -260,7 +301,14 @@ const Dashboard = ({ userData }: DashboardProps) => {
               <CardContent className="p-4">
                 <h4 className="font-medium text-white mb-1">{song.title}</h4>
                 <p className="text-white/60 text-sm mb-2">by {song.artist}</p>
-                <p className="text-white/40 text-xs">{song.reason}</p>
+                <p className="text-white/40 text-xs mb-3">{song.reason}</p>
+                <Button 
+                  size="sm" 
+                  className="bg-primary/20 hover:bg-primary/30 text-primary text-xs"
+                  onClick={() => window.open(song.link, '_blank')}
+                >
+                  Listen ↗
+                </Button>
               </CardContent>
             </Card>
           ))}
