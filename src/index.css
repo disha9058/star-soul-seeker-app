@@ -3,39 +3,39 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Cosmic View Design System - Deep space theme with golden accents */
+/* Cosmic View Design System - Sleek minimal cosmic theme */
 
 @layer base {
   :root {
-    --background: 240 13% 8%;
-    --foreground: 45 100% 95%;
+    --background: 220 15% 8%;
+    --foreground: 0 0% 95%;
 
-    --card: 240 13% 12%;
-    --card-foreground: 45 100% 95%;
+    --card: 220 15% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 240 13% 12%;
-    --popover-foreground: 45 100% 95%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 45 93% 47%;
-    --primary-foreground: 240 13% 8%;
+    --primary: 45 93% 70%;
+    --primary-foreground: 220 15% 8%;
 
-    --secondary: 262 83% 58%;
-    --secondary-foreground: 45 100% 95%;
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 240 13% 15%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 262 83% 58%;
-    --accent-foreground: 45 100% 95%;
+    --accent: 220 15% 18%;
+    --accent-foreground: 0 0% 95%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 240 13% 20%;
-    --input: 240 13% 15%;
-    --ring: 45 93% 47%;
+    --border: 220 15% 20%;
+    --input: 220 15% 15%;
+    --ring: 45 93% 70%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
   }
 }
 
@@ -46,46 +46,56 @@
 
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(135deg, #0F0C29 0%, #24243e 50%, #2E1065 100%);
+    background: #0a0b0d;
     min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   }
 }
 
-/* Cosmic animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+/* Minimal animations */
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
+@keyframes scale-in {
+  0% { opacity: 0; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
 
-@keyframes cosmic-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.05); opacity: 1; }
+.fade-in {
+  animation: fade-in 0.4s ease-out;
 }
 
-.float-animation {
-  animation: float 6s ease-in-out infinite;
+.scale-in {
+  animation: scale-in 0.3s ease-out;
 }
 
-.twinkle-animation {
-  animation: twinkle 2s ease-in-out infinite;
+.glow {
+  animation: glow 2s ease-in-out infinite;
 }
 
-.cosmic-pulse {
-  animation: cosmic-pulse 3s ease-in-out infinite;
-}
-
-/* Cosmic gradient backgrounds */
-.cosmic-gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
+/* Cosmic card style */
 .cosmic-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+/* Minimal button styles */
+.cosmic-button {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.cosmic-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
 }

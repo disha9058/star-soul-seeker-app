@@ -72,89 +72,170 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     switch (step) {
       case 1:
         return (
-          <Card className="cosmic-card">
-            <CardHeader>
-              <CardTitle className="text-center text-2xl">Welcome to Cosmic View</CardTitle>
-              <p className="text-center text-muted-foreground">Let's start with the basics</p>
-            </CardHeader>
-            <CardContent className="space-y-6">
+          <div className="space-y-8 fade-in">
+            <div className="text-center space-y-2">
+              <h1 className="text-2xl font-light text-white">Notifications</h1>
+              <p className="text-white/60 text-sm leading-relaxed max-w-xs mx-auto">
+                As you walk, you'll get notifications as you reach important events. You'll also see them on your lock screen and Apple watch.
+              </p>
+            </div>
+
+            <div className="flex justify-center my-12">
+              <div className="w-48 h-48 relative">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                  </div>
+                </div>
+                
+                {/* Phone and watch mockup */}
+                <div className="absolute top-8 right-4">
+                  <div className="w-16 h-28 bg-white/5 rounded-lg border border-white/10 flex flex-col">
+                    <div className="h-6 bg-white/10 rounded-t-lg" />
+                    <div className="flex-1 p-2 space-y-1">
+                      <div className="h-1 bg-white/20 rounded" />
+                      <div className="h-1 bg-white/20 rounded w-3/4" />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute bottom-8 left-4">
+                  <div className="w-12 h-12 bg-white/5 rounded-lg border border-white/10" />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">What's your name?</Label>
+                <Label htmlFor="name" className="text-white/80 text-sm">What's your name?</Label>
                 <Input
                   id="name"
                   placeholder="Enter your name"
                   value={userData.name}
                   onChange={(e) => updateUserData("name", e.target.value)}
-                  className="bg-input border-border"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-white/20"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="birthdate">When were you born?</Label>
+                <Label htmlFor="birthdate" className="text-white/80 text-sm">When were you born?</Label>
                 <Input
                   id="birthdate"
                   type="date"
                   value={userData.birthdate}
                   onChange={(e) => updateUserData("birthdate", e.target.value)}
-                  className="bg-input border-border"
+                  className="bg-white/5 border-white/10 text-white focus:border-white/20"
                 />
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         );
 
       case 2:
         return (
-          <Card className="cosmic-card">
-            <CardHeader>
-              <CardTitle className="text-center text-2xl">Your Zodiac Sign</CardTitle>
-              <p className="text-center text-muted-foreground">Choose your celestial identity</p>
-            </CardHeader>
-            <CardContent className="space-y-6">
+          <div className="space-y-8 fade-in">
+            <div className="text-center space-y-2">
+              <h1 className="text-2xl font-light text-white">Cosmic Walk</h1>
+              <div className="flex justify-center my-8">
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400/30 to-purple-400/30 flex items-center justify-center">
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500/40 to-purple-500/40 flex items-center justify-center">
+                    <div className="text-2xl">🌍</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <Label className="text-white/80 text-sm">Choose your zodiac sign</Label>
               <Select value={userData.zodiacSign} onValueChange={(value) => updateUserData("zodiacSign", value)}>
-                <SelectTrigger className="bg-input border-border">
+                <SelectTrigger className="bg-white/5 border-white/10 text-white focus:border-white/20">
                   <SelectValue placeholder="Select your zodiac sign" />
                 </SelectTrigger>
-                <SelectContent className="bg-card border-border">
+                <SelectContent className="bg-card border-white/10">
                   {zodiacSigns.map((sign) => (
-                    <SelectItem key={sign.value} value={sign.value}>
+                    <SelectItem key={sign.value} value={sign.value} className="text-white focus:bg-white/10">
                       <div className="flex flex-col">
                         <span>{sign.label}</span>
-                        <span className="text-xs text-muted-foreground">{sign.dates}</span>
+                        <span className="text-xs text-white/40">{sign.dates}</span>
                       </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         );
 
       case 3:
         return (
-          <Card className="cosmic-card">
-            <CardHeader>
-              <CardTitle className="text-center text-2xl">Your Interests</CardTitle>
-              <p className="text-center text-muted-foreground">Help us personalize your recommendations</p>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-2 gap-3">
-                {["Books", "Movies", "Music", "Art", "Travel", "Wellness", "Romance", "Mystery"].map((pref) => (
-                  <Button
-                    key={pref}
-                    variant={userData.preferences.includes(pref) ? "default" : "outline"}
-                    onClick={() => togglePreference(pref)}
-                    className={userData.preferences.includes(pref) 
-                      ? "bg-primary text-background" 
-                      : "border-border hover:bg-muted"
-                    }
-                  >
-                    {pref}
-                  </Button>
-                ))}
+          <div className="space-y-8 fade-in">
+            <div className="text-center space-y-2">
+              <h1 className="text-2xl font-light text-white">Cosmic Walk</h1>
+              <div className="flex justify-center my-8">
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400/30 to-purple-400/30 flex items-center justify-center">
+                  <div className="text-3xl">🌌</div>
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-lg">🚶‍♂️</div>
+                    <span className="text-white font-medium">WALKS</span>
+                  </div>
+                  <div className="text-white/60 text-sm">1 WALK IN PROGRESS</div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </div>
+
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-lg">✨</div>
+                    <span className="text-white font-medium">MORE</span>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </div>
+
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-lg">ℹ️</div>
+                    <span className="text-white font-medium">ABOUT</span>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-white/80 text-sm">Select your interests</Label>
+                <div className="grid grid-cols-2 gap-2">
+                  {["Books", "Movies", "Music", "Art", "Travel", "Wellness"].map((pref) => (
+                    <Button
+                      key={pref}
+                      variant="outline"
+                      onClick={() => togglePreference(pref)}
+                      className={`cosmic-button text-white border-white/10 ${
+                        userData.preferences.includes(pref) 
+                          ? "bg-white/10 border-white/20" 
+                          : "hover:bg-white/5"
+                      }`}
+                    >
+                      {pref}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         );
 
       default:
@@ -176,44 +257,56 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 relative">
-      {/* Progress indicator */}
-      <div className="w-full max-w-md mb-8">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Step {step} of 3</span>
-          <span className="text-sm text-muted-foreground">{Math.round((step / 3) * 100)}%</span>
-        </div>
-        <div className="w-full bg-muted rounded-full h-2">
-          <div 
-            className="bg-gradient-to-r from-primary to-secondary h-2 rounded-full transition-all duration-300"
-            style={{ width: `${(step / 3) * 100}%` }}
-          ></div>
-        </div>
-      </div>
+    <div className="min-h-screen flex flex-col justify-between p-6">
+      {/* Status bar area */}
+      <div className="h-12" />
 
       {/* Step content */}
-      <div className="w-full max-w-md mb-8">
+      <div className="flex-1">
         {renderStep()}
       </div>
 
-      {/* Navigation buttons */}
-      <div className="w-full max-w-md flex gap-4">
-        {step > 1 && (
-          <Button
-            variant="outline"
-            onClick={handleBack}
-            className="flex-1 border-border hover:bg-muted"
+      {/* Navigation */}
+      <div className="space-y-6">
+        {/* Progress dots */}
+        <div className="flex justify-center space-x-2">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className={`h-1 rounded-full transition-all ${
+                i === step ? "w-8 bg-white" : "w-2 bg-white/30"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Navigation buttons */}
+        <div className="flex justify-between items-center">
+          {step > 1 ? (
+            <Button
+              variant="ghost"
+              onClick={handleBack}
+              className="text-white hover:bg-white/5"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </Button>
+          ) : (
+            <div />
+          )}
+
+          <Button 
+            onClick={handleNext}
+            disabled={!isStepValid()}
+            size="icon"
+            className="w-12 h-12 rounded-full bg-primary hover:bg-primary/90 text-background disabled:opacity-30"
           >
-            Back
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
           </Button>
-        )}
-        <Button
-          onClick={handleNext}
-          disabled={!isStepValid()}
-          className="flex-1 bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 text-background"
-        >
-          {step === 3 ? "Complete" : "Next"}
-        </Button>
+        </div>
       </div>
     </div>
   );
